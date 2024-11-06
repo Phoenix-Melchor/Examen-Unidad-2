@@ -5,6 +5,7 @@ import 'package:examen_johan_melchor/infrastructure/connection/http_client.dart'
 import 'package:examen_johan_melchor/modules/categories/repository/category_repository.dart';
 import 'package:examen_johan_melchor/routes.dart';
 
+
 class CategoriesScreen extends StatefulWidget {
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
@@ -27,10 +28,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Categorías",
+        title: Text('Login',
         style: TextStyle(
           color: Colors.white,
-        )),
+        )
+        ),
         backgroundColor: const Color.fromARGB(255, 255, 102, 0),
         centerTitle: true,
       ),
@@ -51,14 +53,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 final category = categories[index];
                 final icon = index % 2 == 0 ? Icons.shopping_bag : Icons.fastfood;
                 final color = index % 2 == 0 ? Colors.orange : Colors.green;
-
                 return ListTile(
                   leading: Icon(icon, color: color),
-                  
                   title: Text(category.name),
                   trailing: Icon(Icons.arrow_forward, color: color),
                   onTap: () {
-                    // Navegar a los productos de la categoría
+                    Navigator.pushNamed(
+                      context,
+                      '${Routes.products}${category.slug}', // Asegúrate que el slug sea parte de la ruta
+                    );
                   },
                 );
               },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:examen_johan_melchor/screens/login_screen.dart';
 import 'package:examen_johan_melchor/screens/categories_screen.dart';
+import 'package:examen_johan_melchor/screens/products_screen.dart';
 import 'package:examen_johan_melchor/routes.dart';
 
 void main() {
@@ -12,15 +13,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Demo App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme: AppBarTheme(color: Colors.blue),
-      ),
       initialRoute: Routes.login,
-      routes: {
-        Routes.login: (context) => LoginScreen(),
-        Routes.categories: (context) => CategoriesScreen(),
-        // Añadir más rutas según se necesiten
+      onGenerateRoute: (settings) {
+        if (settings.name == Routes.login) {
+          return MaterialPageRoute(builder: (context) => LoginScreen());
+        } else if (settings.name == Routes.categories) {
+          return MaterialPageRoute(builder: (context) => CategoriesScreen());
+        } else if (settings.name!.startsWith(Routes.products)) {
+          final categorySlug = settings.name!.substring(Routes.products.length);
+          return MaterialPageRoute(
+            builder: (context) => ProductsScreen(categorySlug: categorySlug),
+          );
+        }
+        return null;
       },
     );
   }
