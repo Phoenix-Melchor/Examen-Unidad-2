@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:examen_johan_melchor/screens/login_screen.dart';
+import 'package:examen_johan_melchor/screens/categories_screen.dart';
+import 'package:examen_johan_melchor/screens/products_screen.dart';
+import 'package:examen_johan_melchor/routes.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      title: 'Demo App',
+      initialRoute: Routes.login,
+      onGenerateRoute: (settings) {
+        if (settings.name == Routes.login) {
+          return MaterialPageRoute(builder: (context) => LoginScreen());
+        } else if (settings.name == Routes.categories) {
+          return MaterialPageRoute(builder: (context) => CategoriesScreen());
+        } else if (settings.name!.startsWith(Routes.products)) {
+          final categorySlug = settings.name!.substring(Routes.products.length);
+          return MaterialPageRoute(
+            builder: (context) => ProductsScreen(categorySlug: categorySlug),
+          );
+        }
+        return null;
+      },
     );
   }
 }
