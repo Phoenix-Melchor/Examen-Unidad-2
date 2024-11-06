@@ -18,4 +18,24 @@ class CategoryRepository implements Repository<Category> {
       throw Exception('Error al cargar las categorías');
     }
   }
+
+  @override
+  Future<Category> getById(String id) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> add(Category category) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> update(Category category) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    throw UnimplementedError();
+  }
 }
