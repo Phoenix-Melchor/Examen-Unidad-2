@@ -28,7 +28,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login',
+        title: Text('Categorias',
         style: TextStyle(
           color: Colors.white,
         )
