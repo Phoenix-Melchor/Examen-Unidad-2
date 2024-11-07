@@ -4,7 +4,7 @@ class Product {
   final String description;
   final double price;
   final String image;
-  final int stock;  // Ahora sólo almacenamos una imagen
+  final int stock;
 
   Product({
     required this.id,
@@ -16,7 +16,6 @@ class Product {
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
-    // Extraemos la primera imagen de la lista, o proporcionamos una URL de imagen por defecto si la lista está vacía.
     String image = (json['images'] as List<dynamic>).isNotEmpty 
         ? json['images'][0] as String 
         : '';

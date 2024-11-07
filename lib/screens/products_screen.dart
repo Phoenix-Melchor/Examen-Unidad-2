@@ -22,8 +22,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     super.initState();
     futureProducts = GetProducts(
       ProductRepository(HttpClient(baseUrl: 'https://dummyjson.com')),
-    ).execute(widget.categorySlug);
-  }
+    ).execute(widget.categorySlug);  }
 
   @override
   Widget build(BuildContext context) {

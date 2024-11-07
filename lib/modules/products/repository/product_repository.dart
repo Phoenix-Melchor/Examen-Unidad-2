@@ -13,14 +13,13 @@ class ProductRepository implements Repository<Product> {
     final response = await client.get('/products/category/$categorySlug');
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      List<dynamic> products = data['products']; // Accediendo a la clave 'products'
+      List<dynamic> products = data['products'];
       return products.map((json) => Product.fromJson(json)).toList();
     } else {
       throw Exception('Error al cargar los productos');
     }
   }
 
-  // Implementación de los otros métodos del repositorio
   @override
   Future<List<Product>> getAll() async {
     throw UnimplementedError('getAll not implemented');
