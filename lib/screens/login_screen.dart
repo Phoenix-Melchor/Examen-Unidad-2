@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               SizedBox(
-                width: double.infinity, // Hace que el botón ocupe todo el ancho disponible
+                width: double.infinity,
                 child: 
                 ElevatedButton(
                   onPressed: () {

@@ -60,7 +60,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      '${Routes.products}${category.slug}', // Asegúrate que el slug sea parte de la ruta
+                      '${Routes.products}${category.slug}',
                     );
                   },
                 );
