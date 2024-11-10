@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:examen_johan_melchor/routes.dart';
+import 'package:examen_johan_melchor/modules/login/useCase/get_login.dart';
+import 'package:examen_johan_melchor/modules/login/domain/repository/login_repository.dart';
+import 'package:examen_johan_melchor/infrastructure/connection/http_client.dart';
+import 'package:examen_johan_melchor/infrastructure/preference_service.dart';
+
+
 
 class LoginScreen extends StatelessWidget {
+final TextEditingController usernameController = TextEditingController();
+final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +30,7 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
+                controller: usernameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'User',
@@ -28,6 +38,7 @@ class LoginScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TextField(
+                controller: passwordController, 
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
@@ -39,8 +50,37 @@ class LoginScreen extends StatelessWidget {
                 width: double.infinity,
                 child: 
                 ElevatedButton(
-                  onPressed: () {
-                  Navigator.pushNamed(context, Routes.categories);
+                  onPressed: () async {
+                    try {
+                      LoginUseCase loginUseCase = LoginUseCase(
+                        LoginRepository(HttpClient(
+                          baseUrl: 'https://dummyjson.com',
+                          preferencesService: PreferencesService(),
+                        )),
+                        PreferencesService(),
+                      );
+                      await loginUseCase.execute(
+                        usernameController.text, 
+                        passwordController.text
+                      );
+                      Navigator.pushNamed(context, Routes.categories);
+                    } catch (e) {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: Text('Error de Inicio de Sesión'),
+                          content: Text(e.toString()),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(ctx).pop();
+                              },
+                              child: Text('Ok'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 16),

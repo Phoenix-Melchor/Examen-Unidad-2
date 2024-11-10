@@ -1,5 +1,5 @@
-import 'package:examen_johan_melchor/modules/products/repository/product_repository.dart';
-import 'package:examen_johan_melchor/modules/products/domain/product.dart';
+import 'package:examen_johan_melchor/modules/products/domain/repository/product_repository.dart';
+import 'package:examen_johan_melchor/modules/products/domain/dto/product.dart';
 
 class GetProducts {
   final ProductRepository productRepository;

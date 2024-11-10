@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:examen_johan_melchor/modules/categories/use_case/get_categories.dart';
-import 'package:examen_johan_melchor/modules/categories/domain/category.dart';
+import 'package:examen_johan_melchor/modules/categories/domain/dto/category.dart';
 import 'package:examen_johan_melchor/infrastructure/connection/http_client.dart';
-import 'package:examen_johan_melchor/modules/categories/repository/category_repository.dart';
+import 'package:examen_johan_melchor/modules/categories/domain/repository/category_repository.dart';
 import 'package:examen_johan_melchor/routes.dart';
-
+import 'package:examen_johan_melchor/infrastructure/preference_service.dart';
 
 class CategoriesScreen extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   final GetCategoriesUseCase getCategoriesUseCase = GetCategoriesUseCase(
-    CategoryRepository(HttpClient(baseUrl: 'https://dummyjson.com')),
+    CategoryRepository(HttpClient(baseUrl: 'https://dummyjson.com', preferencesService: PreferencesService(),)),
   );
 
   late Future<List<Category>> futureCategories;

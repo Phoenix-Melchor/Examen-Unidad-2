@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:examen_johan_melchor/modules/products/use_case/get_products.dart';
-import 'package:examen_johan_melchor/modules/products/domain/product.dart';
+import 'package:examen_johan_melchor/modules/products/domain/dto/product.dart';
 import 'package:examen_johan_melchor/infrastructure/connection/http_client.dart';
-import 'package:examen_johan_melchor/modules/products/repository/product_repository.dart';
+import 'package:examen_johan_melchor/modules/products/domain/repository/product_repository.dart';
 import 'package:examen_johan_melchor/screens/product_detail_screen.dart';
+import 'package:examen_johan_melchor/infrastructure/preference_service.dart';
 
 class ProductsScreen extends StatefulWidget {
   final String categorySlug;
@@ -21,7 +22,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     super.initState();
     futureProducts = GetProducts(
-      ProductRepository(HttpClient(baseUrl: 'https://dummyjson.com')),
+      ProductRepository(HttpClient(baseUrl: 'https://dummyjson.com', preferencesService: PreferencesService(),)),
     ).execute(widget.categorySlug);  }
 
   @override
