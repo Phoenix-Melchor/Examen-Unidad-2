@@ -5,6 +5,7 @@ import 'package:examen_johan_melchor/infrastructure/connection/http_client.dart'
 import 'package:examen_johan_melchor/modules/products/domain/repository/product_repository.dart';
 import 'package:examen_johan_melchor/screens/product_detail_screen.dart';
 import 'package:examen_johan_melchor/infrastructure/preference_service.dart';
+import 'package:examen_johan_melchor/routes.dart';
 
 class ProductsScreen extends StatefulWidget {
   final String categorySlug;
@@ -36,6 +37,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
         ),
         backgroundColor: const Color.fromARGB(255, 255, 102, 0),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.cart);
+            },
+          ),
+        ],
       ),
       body: FutureBuilder<List<Product>>(
         future: futureProducts,
@@ -66,7 +75,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProductDetailScreen(product: product),
+                              builder: (context) => ProductDetailScreen(productId: product.id),
                             ),
                           );
                         },

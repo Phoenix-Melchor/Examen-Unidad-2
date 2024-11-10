@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:examen_johan_melchor/screens/login_screen.dart';
 import 'package:examen_johan_melchor/screens/categories_screen.dart';
 import 'package:examen_johan_melchor/screens/products_screen.dart';
+import 'package:examen_johan_melchor/screens/shoppingCart_screen.dart';
 import 'package:examen_johan_melchor/routes.dart';
 
 void main() {
@@ -24,6 +25,8 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(
             builder: (context) => ProductsScreen(categorySlug: categorySlug),
           );
+        } else if (settings.name == Routes.cart) {
+          return MaterialPageRoute(builder: (context) => CartScreen());
         }
         return null;
       },

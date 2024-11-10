@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:examen_johan_melchor/routes.dart';
-import 'package:examen_johan_melchor/modules/login/useCase/get_login.dart';
+import 'package:examen_johan_melchor/modules/login/usecase/get_login.dart';
 import 'package:examen_johan_melchor/modules/login/domain/repository/login_repository.dart';
 import 'package:examen_johan_melchor/infrastructure/connection/http_client.dart';
 import 'package:examen_johan_melchor/infrastructure/preference_service.dart';
