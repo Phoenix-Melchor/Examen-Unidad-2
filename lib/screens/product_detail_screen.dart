@@ -113,14 +113,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
         backgroundColor: const Color.fromARGB(255, 255, 102, 0),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.cart);
-            },
-          ),
-        ],
       ),
       body: FutureBuilder<ProductDetail>(
         future: futureProductDetail,

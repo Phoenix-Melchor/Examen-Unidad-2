@@ -37,18 +37,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ),
         backgroundColor: const Color.fromARGB(255, 255, 102, 0),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CartScreen(),
-                  ),
-                );
-            },
-          ),
-        ],
       ),
       body: FutureBuilder<List<Category>>(
         future: futureCategories,

@@ -37,14 +37,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
         ),
         backgroundColor: const Color.fromARGB(255, 255, 102, 0),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.cart);
-            },
-          ),
-        ],
       ),
       body: FutureBuilder<List<Product>>(
         future: futureProducts,
