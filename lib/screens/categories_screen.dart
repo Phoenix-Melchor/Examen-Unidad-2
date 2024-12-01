@@ -1,3 +1,5 @@
+import 'package:examen_johan_melchor/screens/products_screen.dart';
+import 'package:examen_johan_melchor/screens/shoppingCart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:examen_johan_melchor/modules/categories/use_case/get_categories.dart';
 import 'package:examen_johan_melchor/modules/categories/domain/dto/category.dart';
@@ -39,7 +41,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              Navigator.pushNamed(context, '${Routes.cart}');
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CartScreen(),
+                  ),
+                );
             },
           ),
         ],
@@ -66,9 +72,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   title: Text(category.name),
                   trailing: Icon(Icons.arrow_forward, color: color),
                   onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      '${Routes.products}${category.slug}',
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProductsScreen(categorySlug: category.slug),
+                      ),
                     );
                   },
                 );
