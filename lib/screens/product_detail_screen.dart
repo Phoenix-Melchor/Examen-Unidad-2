@@ -53,7 +53,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     int existingProductIndex = cart.indexWhere((item) => item['id'] == product.id);
 
     if (existingProductIndex != -1) {
-      // Producto ya existe, actualizar cantidad y total
       int existingQuantity = cart[existingProductIndex]['quantity'];
       int newTotalQuantity = existingQuantity + quantity;
 

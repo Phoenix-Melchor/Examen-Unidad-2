@@ -63,7 +63,7 @@ final TextEditingController passwordController = TextEditingController();
                         usernameController.text, 
                         passwordController.text
                       );
-                      Navigator.pushNamed(context, Routes.categories);
+                      Navigator.pushNamed(context, Routes.navbar);
                     } catch (e) {
                       showDialog(
                         context: context,

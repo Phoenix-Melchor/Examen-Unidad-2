@@ -3,4 +3,5 @@ class Routes {
   static const categories = '/categories';
   static const products = '/products/';
   static const cart = '/cart';
+  static const navbar = '/navbar'; 
 }

@@ -89,7 +89,6 @@ class _CartScreenState extends State<CartScreen> {
                         IconButton(
                           icon: Icon(Icons.info, color: Colors.blue),
                           onPressed: () {
-                            // Navegar al detalle del producto pasando solo el ID
                             if (item['id'] != null) {
                               Navigator.push(
                                 context,
@@ -98,7 +97,6 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               );
                             } else {
-                              // Mostrar un mensaje de error si no hay ID disponible
                               showDialog(
                                 context: context,
                                 builder: (ctx) => AlertDialog(

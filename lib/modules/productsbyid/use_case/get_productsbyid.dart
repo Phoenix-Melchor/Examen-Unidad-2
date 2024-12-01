@@ -12,7 +12,6 @@ class GetProductbyid {
   });
 
   Future<ProductDetail> execute(int productId) async {
-    // Validar el token antes de hacer la solicitud
     String? token = await preferencesService.getAuthToken();
     if (token == null) {
       throw Exception('Token not found');
