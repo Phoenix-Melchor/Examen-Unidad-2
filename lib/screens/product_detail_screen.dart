@@ -106,10 +106,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalles de Producto',
-        style: TextStyle(
-          color: Colors.white,
-        )
+        title: Text(
+          'Detalles de Producto',
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 255, 102, 0),
         centerTitle: true,
@@ -187,6 +188,34 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ),
                     ),
+                    const Divider(height: 20, thickness: 1),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Reseñas:',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    ...product.reviews.map((review) {
+                      return Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            child: Text(review.rating.toString()),
+                          ),
+                          title: Text(review.reviewerName),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(review.comment),
+                              Text(
+                                "Fecha: ${review.date.toLocal()}".split(' ')[0],
+                                style: TextStyle(fontSize: 12, color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ],
                 ),
               ),
