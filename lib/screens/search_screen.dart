@@ -3,6 +3,8 @@ import 'package:examen_johan_melchor/modules/search/use_case/get_search.dart';
 import 'package:examen_johan_melchor/modules/search/domain/dto/search.dart';
 import 'package:examen_johan_melchor/modules/search/domain/repository/search_repository.dart';
 import 'package:examen_johan_melchor/screens/product_detail_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -44,6 +46,28 @@ class _SearchScreenState extends State<SearchScreen> {
         SnackBar(content: Text('Error al buscar productos')),
       );
     }
+  }
+
+  Future<void> _addProductToSeen(SearchResult product) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? seenData = prefs.getString('visited');
+    List<dynamic> seenProducts = seenData != null ? jsonDecode(seenData) : [];
+
+    int productIndex = seenProducts.indexWhere((p) => p['id'] == product.id);
+    if (productIndex != -1) {
+      seenProducts[productIndex]['visits'] =
+          (seenProducts[productIndex]['visits'] ?? 0) + 1;
+    } else {
+      seenProducts.add({
+        'id': product.id,
+        'title': product.title,
+        'price': product.price,
+        'image': product.thumbnail,
+        'visits': 1,
+      });
+    }
+
+    await prefs.setString('visited', jsonEncode(seenProducts));
   }
 
   @override
@@ -94,7 +118,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                             title: Text(product.title),
                             subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
-                            onTap: () {
+                            onTap: () async {
+                              await _addProductToSeen(product);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -39,7 +39,7 @@ class _SeenProductsScreenState extends State<SeenProductsScreen> {
         centerTitle: true,
       ),
       body: seenProducts.isEmpty
-          ? Center(child: Text('No hay productos vistos.'))
+          ? Center(child: Text('No hay productos vistos'))
           : ListView.builder(
               itemCount: seenProducts.length,
               itemBuilder: (context, index) {
@@ -58,12 +58,22 @@ class _SeenProductsScreenState extends State<SeenProductsScreen> {
                     ),
                     trailing: IconButton(
                       icon: Icon(Icons.info, color: Colors.blue),
-                      onPressed: () {
+                      onPressed: () async {
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        String? seenData = prefs.getString('visited');
+                        if (seenData != null) {
+                          List<dynamic> products = jsonDecode(seenData);
+                          int productIndex = products.indexWhere((p) => p['id'] == product['id']);
+                          if (productIndex != -1) {
+                            products[productIndex]['visits'] =
+                                (products[productIndex]['visits'] ?? 0) + 1;
+                            await prefs.setString('visited', jsonEncode(products));
+                          }
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                ProductDetailScreen(productId: product['id']),
+                            builder: (context) => ProductDetailScreen(productId: product['id']),
                           ),
                         );
                       },
