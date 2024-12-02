@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:examen_johan_melchor/modules/search/use_case/get_search.dart';
+import 'package:examen_johan_melchor/modules/search/domain/dto/search.dart';
+import 'package:examen_johan_melchor/modules/search/domain/repository/search_repository.dart';
 import 'package:examen_johan_melchor/screens/product_detail_screen.dart';
-import 'package:examen_johan_melchor/modules/productsbyid/domain/dto/productsbyid.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -11,8 +11,12 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-  List<dynamic> _searchResults = [];
+  List<SearchResult> _searchResults = [];
   bool _isLoading = false;
+
+  final GetSearchResults getSearchResults = GetSearchResults(
+    SearchRepository('https://dummyjson.com'),
+  );
 
   Future<void> _searchProducts(String query) async {
     if (query.isEmpty) {
@@ -26,19 +30,14 @@ class _SearchScreenState extends State<SearchScreen> {
       _isLoading = true;
     });
 
-    final response = await http.get(
-      Uri.parse('https://dummyjson.com/products/search?q=$query'),
-    );
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
+    try {
+      final results = await getSearchResults.execute(query);
       setState(() {
-        _searchResults = data['products'];
+        _searchResults = results;
         _isLoading = false;
       });
-    } else {
+    } catch (error) {
       setState(() {
-        _searchResults = [];
         _isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
@@ -85,7 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           final product = _searchResults[index];
                           return ListTile(
                             leading: Image.network(
-                              product['thumbnail'] ?? '',
+                              product.thumbnail,
                               width: 50,
                               height: 50,
                               fit: BoxFit.cover,
@@ -93,15 +92,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                 return Icon(Icons.image_not_supported);
                               },
                             ),
-                            title: Text(product['title'] ?? 'Producto desconocido'),
-                            subtitle: Text('\$${product['price']}'),
+                            title: Text(product.title),
+                            subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProductDetailScreen(
-                                    productId: product['id'],
-                                  ),
+                                  builder: (context) => ProductDetailScreen(productId: product.id),
                                 ),
                               );
                             },
