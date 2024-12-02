@@ -48,7 +48,7 @@ class _NavBarState extends State<NavBar> {
           Navigator(
             key: UniqueKey(),
             onGenerateRoute: (settings) {
-              return MaterialPageRoute(builder: (_) => SeenproductsScreen());
+              return MaterialPageRoute(builder: (_) => SeenProductsScreen());
             },
           ),
           Navigator(
