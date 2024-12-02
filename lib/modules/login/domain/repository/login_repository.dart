@@ -7,7 +7,8 @@ class LoginRepository {
   final HttpClient httpClient;
 
   LoginRepository(this.httpClient);
-  Future<String> login(Login loginDTO) async {
+
+  Future<Map<String, dynamic>> login(Login loginDTO) async {
     var response = await httpClient.post(
       '/auth/login',
       body: jsonEncode(loginDTO.toJson()),
@@ -17,12 +18,12 @@ class LoginRepository {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      var token = data['accessToken'] ?? (throw Exception('No se encontro el Token'));
-      return token;
+      if (!data.containsKey('accessToken')) {
+        throw Exception('No se encontró el Token');
+      }
+      return data; // Devolvemos todos los datos de la respuesta.
     } else {
       throw Exception('Failed to login with status code: ${response.statusCode}');
     }
   }
-
-  
 }

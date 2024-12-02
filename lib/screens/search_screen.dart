@@ -5,6 +5,7 @@ import 'package:examen_johan_melchor/modules/search/domain/repository/search_rep
 import 'package:examen_johan_melchor/screens/product_detail_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:examen_johan_melchor/routes.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -19,6 +20,20 @@ class _SearchScreenState extends State<SearchScreen> {
   final GetSearchResults getSearchResults = GetSearchResults(
     SearchRepository('https://dummyjson.com'),
   );
+
+  @override
+  void initState() {
+    super.initState();
+    _checkToken();
+  }
+
+  Future<void> _checkToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('authToken');
+    if (token == null) {
+      Navigator.pushReplacementNamed(context, Routes.login);
+    }
+  }
 
   Future<void> _searchProducts(String query) async {
     if (query.isEmpty) {

@@ -10,8 +10,18 @@ class LoginUseCase {
 
   Future<void> execute(String username, String password) async {
     var login = Login(username: username, password: password);
-    String token = await loginRepository.login(login);
+    var responseData = await loginRepository.login(login);
+
+    String token = responseData['accessToken'];
     await preferencesService.setAuthToken(token);
+
+    await preferencesService.setUserData({
+      'id': responseData['id'],
+      'username': responseData['username'],
+      'email': responseData['email'],
+      'firstName': responseData['firstName'],
+      'lastName': responseData['lastName'],
+      'image': responseData['image'],
+    });
   }
 }
-
